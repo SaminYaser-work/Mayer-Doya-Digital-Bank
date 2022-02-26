@@ -1,3 +1,3 @@
 <?php
 
-header('location: General/login.php');
+header('location: General/index.php');
