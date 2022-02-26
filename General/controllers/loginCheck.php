@@ -15,9 +15,10 @@ if(isset($_REQUEST['submitLogin'])) {
             // $_SESSION['username'] = $username;
             // $_SESSION['accountType'] = $accountType;
 
+            setcookie('status', 'true', time() + 3600, "/");
             fclose($file);
             $location = "../../" .  getAccountType($accountType) . "/index.php";
-            echo "<script>alert('Login successful');</script>";
+            // echo "<script>alert('Login successful');</script>";
             header("location: " . $location);
         }
     }
