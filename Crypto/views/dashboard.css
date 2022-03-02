@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap");
+
+:root {
+  font-size: 16px;
+  font-family: "Nunito", sans-serif;
+  --text-primary: #ffffff;
+  --text-secondary: #ececec;
+  --bg-primary: #23272a;
+  --bg-primary: #23272a;
+  --bg-secondary: #2c2f33;
+  --transition-speed: 600ms;
+  --icon-highlight: #7289da;
+}
+
+.navbar::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  color: black;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin-left: 5rem;
+  padding: 1rem;
+}
+
+.navbar {
+  top: 0;
+  width: 5rem;
+  height: 100vh;
+  position: fixed;
+  background-color: var(--bg-primary);
+  transition: width var(--transition-speed) ease;
+  overflow-y: scroll;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+.nav-item:last-child {
+  margin-top: auto;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+  background: var(--bg-secondary);
+  /* color: var(--text-secondary); */
+}
+
+.link-text {
+  display: none;
+  margin-left: 1rem;
+}
+
+.nav-link i {
+  margin: 0 1.5rem;
+  transition: var(--transition-speed);
+}
+
+.nav-link:hover i {
+  color: var(--icon-highlight);
+}
+
+.logo {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  font-size: 1rem;
+  letter-spacing: 0.3ch;
+  width: 100%;
+  transition: var(--transition-speed);
+}
+
+.logo-text {
+  display: inline;
+  position: absolute;
+  left: -999px;
+  transition: var(--transition-speed);
+}
+
+.navbar:hover {
+  width: 16rem;
+}
+
+.navbar:hover .link-text {
+  display: inline;
+}
+
+.navbar:hover .logo-text {
+  left: 0px;
+}
+
+.navbar:hover .logo i {
+  display: none;
+}
