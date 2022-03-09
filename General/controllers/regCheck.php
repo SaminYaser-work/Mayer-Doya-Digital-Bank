@@ -16,7 +16,7 @@ if(isset($_REQUEST['submit'])) {
         fwrite($file, $write);
         fclose($file);
         echo "<script>alert('Registration successful');</script>";
-        echo "<a href='../views/login.php'>Log In</a>";
+        echo "<a href='../views/login.php'>Log in to Your New Account.</a>";
         // header('Location: login.php');
     } else {
         echo "<script>alert('Passwords do not match');</script>";

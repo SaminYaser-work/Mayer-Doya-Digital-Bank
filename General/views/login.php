@@ -20,10 +20,10 @@
 
         Account Type:
         <select name="accountType">
-            <option value="1">Regular</option>
-            <option value="2">Investment</option>
-            <option value="3">Insurance</option>
-            <option value="4">Crypto</option>
+            <option value="Regular">Regular</option>
+            <option value="Investment">Investment</option>
+            <option value="Insurance">Insurance</option>
+            <option value="Crypto">Crypto</option>
         </select>
         <br>
 

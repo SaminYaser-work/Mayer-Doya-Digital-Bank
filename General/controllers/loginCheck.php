@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+$_SESSION['username'] = "";
+
 if(isset($_REQUEST['submitLogin'])) {
 
     $username = trim($_POST['username']);
@@ -12,12 +15,11 @@ if(isset($_REQUEST['submitLogin'])) {
         $user = explode(',', $line);
         if(trim($user[0]) == $username && trim($user[1]) == $password) {
 
-            // $_SESSION['username'] = $username;
-            // $_SESSION['accountType'] = $accountType;
+            $_SESSION['username'] = $username;
 
             setcookie('status', 'true', time() + 3600, "/");
             fclose($file);
-            $location = "../../" .  getAccountType($accountType) . "/index.php";
+            $location = "../../" .  $accountType . "/index.php";
             // echo "<script>alert('Login successful');</script>";
             header("location: " . $location);
         }
@@ -28,17 +30,4 @@ if(isset($_REQUEST['submitLogin'])) {
     echo "Invalid username or password<br>";
     echo "<a href='../views/login.php'>Try again</a>";
 
-}
-
-function getAccountType($accountType) {
-    switch($accountType) {
-        case 1:
-            return 'Regular';
-        case 2:
-            return 'Investment';
-        case 3:
-            return 'Insurance';
-        case 4:
-            return 'Crypto';
-    }
 }
