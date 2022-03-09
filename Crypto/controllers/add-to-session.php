@@ -2,16 +2,17 @@
 
 // require('../../General/views/header.php');
 
-$coins =[
-['name' => 'Bitcoin', 'symbol' => 'BTC', 'price' => '', 'change' => ''],
-['name' => 'Ethereum', 'symbol' => 'ETH', 'price' => '', 'change' => ''],
-['name' => 'Litecoin', 'symbol' => 'LTC', 'price' => '', 'change' => ''],
-['name' => 'Bitcoin Cash', 'symbol' => 'BCH', 'price' => '', 'change' => ''],
-['name' => 'Ripple', 'symbol' => 'XRP', 'price' => '', 'change' => ''],
-['name' => 'Cardano', 'symbol' => 'ADA', 'price' => '', 'change' => ''],
-];
 
-$_SESSION['coins'] = $coins;
-$_SESSION['count'] = count($coins);
-$_SESSION['crypto'] = array();
+// $coins = [];
+
+// require_once('fetch-price.php');
+// $data = getPrice();
+// foreach($data->data as $coin) {
+//     array_push($coins, ['name' => $coin->name, 'symbol' => $coin->symbol, 'price' => $coin->quote->USD->price, 'change' => $coin->quote->USD->percent_change_24h]);
+// }
+
+// $_SESSION['coins'] = $coins;
+// $_SESSION['count'] = count($coins);
+// $_SESSION['crypto'] = array();
+$_SESSION['time'] = time();
 $_SESSION['balance'] = 0;

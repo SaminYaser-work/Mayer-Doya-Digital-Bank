@@ -1,6 +1,9 @@
 <?php
 require_once('../../General/views/header.php');
 require_once('dash-1.html');
+
+$coins = [];
+
 ?>
 
 <h1>Home</h1>
@@ -22,30 +25,34 @@ echo "<h2>Your balance is: ".$_SESSION['balance']."</h2>";
 
         <form action="" method="post">
             <?php
-                  // while(true) {
-                    foreach($_SESSION['coins'] as $coin) {
-                      $coin['price'] = "$" . rand(100, 10000);
-                      $class = "";
-                      if(rand(0, 1)) {
-                        $coin['change'] = "+" . rand(1, 10) . "." . rand(1,50) . "%";
-                        $class = "change-up";
-                      } else {
-                        $coin['change'] = "-" . rand(1, 10) . "." . rand(1,50) . "%";
-                        $class = "change-down";
-                      }
+
+            require_once('../controllers/fetch-price.php');
+            $data = callAPI("../models/api-key.txt");
+            foreach($data->data as $coin) {
+                array_push($coins, ['name' => $coin->name, 'symbol' => $coin->symbol, 'price' => $coin->quote->BDT->price, 'change' => $coin->quote->BDT->percent_change_24h]);
+            }
+            
+            $_SESSION['coins'] = $coins;
+            $_SESSION['count'] = count($coins);
+            $_SESSION['crypto'] = array();
+            foreach($_SESSION['coins'] as $coin) {
+              $class = "";
+              if($coin['change'] >= 0) {
+                $class = "change-up";
+              } else if($coin['change'] < 0) {
+                $class = "change-down";
+              }
                   ?>
             <tr>
                 <td class="trend-name"><?=$coin['name'] . " "?><span class="symbol"><?=$coin['symbol']?></span>
                 </td>
-                <td><?=$coin['price']?></td>
-                <td class="<?=$class?>"><?=$coin['change']?></td>
+                <td><?="৳" . number_format($coin['price'], 2, '.', ',')?></td>
+                <td class="<?=$class?>"><?=number_format($coin['change'], 2, '.', ',') . "%"?></td>
                 <td class="trend-buy"><a href="" class="button-buy">Buy</a></td>
             </tr>
             <?php
-                    // }
-                    // sleep(100);
                   }
-                  ?>
+            ?>
         </form>
 
 
