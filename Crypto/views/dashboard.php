@@ -2,8 +2,6 @@
 require_once('../../General/views/header.php');
 require_once('dash-1.html');
 
-$coins = [];
-
 ?>
 
 <h1>Home</h1>
@@ -19,41 +17,38 @@ echo "<h2>Your balance is: ".$_SESSION['balance']."</h2>";
         <tr>
             <th class="trend-header trend-name">Name</th>
             <th class="trend-header trend-price">Last Price</th>
-            <th class="trend-header trend-change">Change</th>
+            <th class="trend-header trend-change">Change [1h]</th>
             <th></th>
         </tr>
 
-        <form action="" method="post">
-            <?php
+        <?php
 
             require_once('../controllers/fetch-price.php');
-            $data = callAPI("../models/api-key.txt");
-            foreach($data->data as $coin) {
-                array_push($coins, ['name' => $coin->name, 'symbol' => $coin->symbol, 'price' => $coin->quote->BDT->price, 'change' => $coin->quote->BDT->percent_change_24h]);
-            }
-            
-            $_SESSION['coins'] = $coins;
-            $_SESSION['count'] = count($coins);
-            $_SESSION['crypto'] = array();
-            foreach($_SESSION['coins'] as $coin) {
+            $data = getPrice('../models/price-api.txt');
+
+            foreach($data as $coin) {
               $class = "";
-              if($coin['change'] >= 0) {
+              if($coin->{'1h'}->price_change_pct >= 0) {
                 $class = "change-up";
-              } else if($coin['change'] < 0) {
+              } else {
                 $class = "change-down";
               }
                   ?>
-            <tr>
-                <td class="trend-name"><?=$coin['name'] . " "?><span class="symbol"><?=$coin['symbol']?></span>
-                </td>
-                <td><?="৳" . number_format($coin['price'], 2, '.', ',')?></td>
-                <td class="<?=$class?>"><?=number_format($coin['change'], 2, '.', ',') . "%"?></td>
-                <td class="trend-buy"><a href="" class="button-buy">Buy</a></td>
-            </tr>
-            <?php
-                  }
+        <tr>
+            <td class="trend-name" style="height: 40px;">
+                <img src="<?=$coin->logo_url?>" alt="logo" width="20px" style="vertical-align: baseline;">
+                <?=$coin->name . " "?>
+                <span class="symbol"><?=$coin->symbol?></span>
+            </td>
+            <td><?="৳" . number_format($coin->price, 2, '.', ',')?></td>
+            <td class="<?=$class?>"><?=number_format($coin->{'1h'}->price_change_pct, 4, '.', ',') . "%"?></td>
+            <form action="buy_crypto.php?sym=<?=$coin->symbol?>" method="post">
+                <td class="trend-buy"><input type="submit" name="buy" value="Buy" class="button-buy"></td>
+            </form>
+        </tr>
+        <?php
+            }
             ?>
-        </form>
 
 
     </table>

@@ -1,6 +1,6 @@
 <?php
 
-$startingBalance = 10000;
+$startingBalance = 50000;
 
 function check_user_data($filePath) {
     if(!isset($_SESSION['username'])) {
@@ -21,10 +21,10 @@ function check_user_data($filePath) {
 
         if($arrUser[0] == $username) {
             $_SESSION['balance'] = $arrUser[1];
-
-            for($i = 2; $i < count($arrUser); $i++) {
-                $_SESSION['crypto'][$i - 2] = $arrUser[$i];
-            }
+            $_SESSION['userData'] = $arrUser;
+            // for($i = 2; $i < count($arrUser); $i++) {
+            //     $_SESSION['crypto'][$i - 2] = $arrUser[$i];
+            // }
             $isFound = true;
             break;
         }
@@ -51,4 +51,29 @@ function write_zero($count) {
         $zero .= "0,";
     }
     return substr($zero, 0, -1);
+}
+
+function update_user_data($filePath, $userData) {
+    $file = fopen($filePath, "r");
+    $username = $_SESSION['username'];
+    $content = "";
+    while(!feof($file)) {
+        $line = fgets($file);
+        if($line == "") {
+            break;
+        }
+
+        $arrUser = explode(',', $line);
+
+        if($arrUser[0] == $username) {
+            $line = implode(',', $userData);
+        }
+
+        $content .= $line . "\r\n";
+    }
+    fclose($file);
+
+    $file = fopen($filePath, "w");
+    fwrite($file, $content);
+    fclose($file);
 }
