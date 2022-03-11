@@ -3,7 +3,6 @@
 function getNews($filePath) {
 
     $myAPIKey = file_get_contents($filePath);
-    // $myAPIKey = 'eb2d9931bab643599786bfb1ef37ed6e';
 
     $request = 'https://newsapi.org/v2/everything?q=Cryptocurrency&apiKey=' . $myAPIKey;
     
