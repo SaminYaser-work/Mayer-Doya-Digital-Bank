@@ -8,7 +8,7 @@ $data = getNews("../models/news-api.txt");
 
 ?>
 
-<h1 class="css-test">News</h1>
+<h1>News</h1>
 
 
 <div class="news-flex-container">
@@ -42,7 +42,7 @@ foreach($data->articles as $article) {
             </div>
 
             <div class="button-wrapper">
-                <a class="button" href="<?=$article->url?>">
+                <a class="button" target="_blank" href="<?=$article->url?>">
                     Read More
                 </a>
             </div>
@@ -58,10 +58,6 @@ foreach($data->articles as $article) {
     }
 }
 ?>
-
-
-
-
 </div>
 
 

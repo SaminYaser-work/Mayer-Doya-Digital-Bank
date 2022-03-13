@@ -6,8 +6,11 @@
   --text-primary: #ffffff;
   --bg-primary: #23272a;
   --bg-secondary: #3f4349;
+  --bg-gray: #4f5d7e;
   --transition-speed: 600ms;
   --icon-highlight: #7289da;
+  --icon-green: #3da560;
+  --icon-red: #ec4145;
 }
 
 .navbar::-webkit-scrollbar {
@@ -15,11 +18,14 @@
 }
 
 body {
-  color: black;
-  background: radial-gradient( circle farthest-corner at 10% 20%,  rgba(226,240,254,1) 0%, rgba(255,247,228,1) 90%  ) no-repeat center center fixed;
+  color: white;
+  background: var(--bg-secondary) no-repeat center center fixed;
   background-size: cover;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 main {
@@ -126,10 +132,72 @@ main {
   display: none;
 }
 
-/* home - trend table */
-.trend {
-  border: 1px solid black;
+/* --------------------------- */
+/* Misc */
+/* --------------------------- */
+.button-main {
+  background: var(--icon-highlight);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--icon-highlight);
+  transition: var(--transition-speed);
+  text-decoration: none;
+}
+
+.button-main:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.button-submit {
+  background: var(--icon-green);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--icon-green);
+  transition: var(--transition-speed);
+}
+
+.button-submit:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.button-cancel {
+  background: var(--icon-red);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--icon-red);
+  transition: var(--transition-speed);
+}
+
+.button-cancel:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.github {
+  color: var(--icon-highlight);
   font-size: 1.5rem;
+  transition: var(--transition-speed);
+}
+
+.github:hover {
+  color: var(--icon-green);
+}
+
+/* --------------------------- */
+/* home - trend table */
+/* --------------------------- */
+.trend {
+  /* border: 1px solid var(--bg-gray); ; */
+  font-size: 1.5rem;
+  /* background-color: var(--bg-gray); */
 }
 
 .trend-header {
@@ -142,6 +210,7 @@ main {
 
 .trend-name {
   width: 50%;
+  font-weight: bold;
 }
 
 .trend-price {
@@ -154,28 +223,33 @@ main {
 }
 
 .change-up {
-  color: green;
+  color: var(--icon-green);
 }
 
 .change-down {
-  color: #cc0000;
+  color: var(--icon-red);
 }
 
 .symbol {
-  color: gray;
-  font-weight: lighter;
+  color: var(--icon-highlight);
+  font-weight: 100;
 }
 
 .button-buy {
-  color: #e8e6e3;
+  color: var(--text-primary);
   text-decoration: none;
-  background-color: #0e7a4e;
-  padding: 0.1rem 0.4rem;
-  border: 1px solid #46b186;
+  background-color: var(--icon-green);
+  padding: 0.5rem 1rem;
   margin-left: 10px;
   margin-right: 10px;
   font-size: smaller;
   cursor: pointer;
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.button-buy:hover {
+  background-color: var(--icon-highlight);
 }
 
 /* debit */
@@ -196,8 +270,6 @@ main {
   color: var(--icon-highlight);
 }
 
-
-
 /* ---------------------------- */
 /* news*/
 /* ---------------------------- */
@@ -208,16 +280,20 @@ main {
   flex-wrap: wrap;
 }
 
+.news-flex-container::after {
+  content: "";
+  flex: auto;
+}
 
 .card-wrapper {
   margin: 0.5rem;
 }
 
 .card {
-  position relative;
+  /* position: relative; */
   max-width: 20rem;
   height: 32rem;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   border-radius: 8px;
   overflow: hidden;
   padding-bottom: 10px;
@@ -239,14 +315,14 @@ main {
 }
 
 .news-img:hover {
- -webkit-transform: scale3d(1.2, 1.2, 1);
+  -webkit-transform: scale3d(1.2, 1.2, 1);
   transform: scale3d(1.2, 1.2, 1);
   transition: all var(--transition-speed) linear;
 }
 
 .text-box-wrapper {
- padding: 20px;
- color: var(--text-primary);
+  padding: 20px;
+  color: var(--text-primary);
 }
 
 .heading {
@@ -257,7 +333,6 @@ main {
   -webkit-box-orient: vertical;
   white-space: normal;
 }
-
 
 .heading-line {
   width: 30px;
@@ -296,12 +371,37 @@ main {
   transition: linear 0.2s;
 }
 
-
 /* ---------------------------- */
 /* buy & sell*/
 /* ---------------------------- */
 
-.table-fee  td, .table-fee  th, .table-fee  tr, .table-fee {
-  border: 1px solid black;
+.table-controls,
+.table-controls > * {
+  margin: 1rem auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.table-fee {
+  margin: 0 auto;
+}
+
+.table-fee td,
+.table-fee th,
+.table-fee tr,
+.table-fee {
+  border: 1px solid var(--text-primary);
   border-collapse: collapse;
+}
+
+/* ---------------------------- */
+/* Footer */
+/* ---------------------------- */
+
+footer {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto;
 }
