@@ -76,9 +76,16 @@ function update_user_data($filePath, $userData) {
 }
 
 function write_new_misc_data($filePath) {
-    $file = fopen($filePath, "a");
-    fwrite($file, implode(',', $_SESSION['miscData']) . "\r\n");
-    fclose($file);
+
+    if($_SESSION['hasCard'] == false) {
+        $file = fopen($filePath, "a");
+        fwrite($file, implode(',', $_SESSION['miscData']) . "\r\n");
+        fclose($file);
+        $_SESSION['hasCard'] = true;
+    }
+    else {
+        echo "<script>alert('You already have a card.')</script>";
+    }
 }
 
 function check_misc_user_data($filePath) {

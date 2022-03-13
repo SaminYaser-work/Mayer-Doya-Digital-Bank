@@ -6,10 +6,13 @@ require_once('dash-1.html');
 $minimumBalance = 50000;
 
 function checkFile() {
-    if($_FILES['file']['size'] <= 102400) {
-        $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+    echo '<script>alert("' . $_FILES['nid']['size'] . '")</script>';
+    $size = (int)$_FILES['nid']['size'];
+    if($size <= 10485760) {
+        $ext = pathinfo($_FILES['nid']['name'], PATHINFO_EXTENSION);
+        echo '<script>alert("' . $ext . '")</script>';
         if($ext == "jpg") {
-            return true;
+            return 1;
         } else {
             return -1;
         }
@@ -19,6 +22,8 @@ function checkFile() {
 
 if(isset($_POST['submit'])) {
     $result = checkFile();
+    echo '<script>alert("' . $result . '")</script>';
+
     if ($result == -2) {
         echo "<script>alert('File is too large!')</script>";
     }
@@ -26,10 +31,20 @@ if(isset($_POST['submit'])) {
         echo "<script>alert('File must be a jpg!')</script>";
     }
     else {
-        $_SESSION['miscData'] = [$_SESSION['username'], $_REQUEST['houseno'], $_REQUEST['street'], $_REQUEST['city']];
-        $_SESSION['hasCard'] = true;
 
-        require_once('../controllers/get-user-data.php');
+        $src = $_FILES['nid']['tmp_name'];
+        $des = 'uploads/' . $_SESSION['username'] . '_NID.jpg';
+
+        if(move_uploaded_file($src, $des)) {
+            $_SESSION['miscData'] = [$_SESSION['username'], $_REQUEST['houseno'], $_REQUEST['street'], $_REQUEST['city']];
+            $_SESSION['hasCard'] = true;
+            require_once('../controllers/get-user-data.php');
+            write_new_misc_data('../models/misc-data.txt');
+            echo "<script>alert('Successfully uploaded!')</script>";
+        }
+        else {
+            echo "<script>alert('Failed to upload!')</script>";
+        }
     }
 }
 
@@ -53,7 +68,11 @@ if(isset($_POST['submit'])) {
 <?php
 
 if(isset($_POST['checkEl'])) {
-    if($_SESSION['balance'] >= $minimumBalance) {
+    if($_SESSION['hasCard'] == true) {
+        echo "<script>alert('You already have a card!')</script>";
+    }
+
+    else if($_SESSION['balance'] >= $minimumBalance) {
 ?>
 <p class="text-debit">
     <span class="text-debit-em">Congratulations!</span> You are eligible for the Crypto Debit Card. Provide
