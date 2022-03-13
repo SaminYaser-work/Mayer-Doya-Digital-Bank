@@ -12,13 +12,13 @@ if(isset($_REQUEST['submit'])) {
     
         switch($service) {
             case 'buy':
-                $fee = $amount * 0.001;
+                $fee = $amount * $_SESSION['rBuy'];
                 break;
             case 'sell':
-                $fee = $amount * 0.05;
+                $fee = $amount * $_SESSION['rSell'];
                 break;
             case 'send':
-                $fee = $amount * 0.001;
+                $fee = $amount * $_SESSION['rSend'];
                 break;
             case 'hodl':
                 $fee = 0.0000;
@@ -67,7 +67,7 @@ if(isset($_REQUEST['submit'])) {
 
         <tr>
             <td>
-                <input type="submit" name="submit" value="Calculate">
+                <input class="button-main" type="submit" name="submit" value="Calculate">
             </td>
         </tr>
     </table>

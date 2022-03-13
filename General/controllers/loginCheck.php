@@ -2,6 +2,7 @@
 
 session_start();
 $_SESSION['username'] = "";
+$_SESSION['userInfo'] = array();
 
 if(isset($_REQUEST['submitLogin'])) {
 
@@ -16,11 +17,11 @@ if(isset($_REQUEST['submitLogin'])) {
         if(trim($user[0]) == $username && trim($user[1]) == $password) {
 
             $_SESSION['username'] = $username;
+            $_SESSION['userInfo'] = $user;
 
             setcookie('status', 'true', time() + 3600, "/");
             fclose($file);
             $location = "../../" .  $accountType . "/index.php";
-            // echo "<script>alert('Login successful');</script>";
             header("location: " . $location);
         }
     }

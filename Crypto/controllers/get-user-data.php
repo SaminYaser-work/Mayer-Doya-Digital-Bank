@@ -15,16 +15,13 @@ function check_user_data($filePath) {
     while(!feof($file)) {
         $line = fgets($file);
         if($line == "") {
-            break;
+            continue;
         }
         $arrUser = explode(',', $line);
 
         if($arrUser[0] == $username) {
             $_SESSION['balance'] = $arrUser[1];
             $_SESSION['userData'] = $arrUser;
-            // for($i = 2; $i < count($arrUser); $i++) {
-            //     $_SESSION['crypto'][$i - 2] = $arrUser[$i];
-            // }
             $isFound = true;
             break;
         }
@@ -37,20 +34,20 @@ function check_user_data($filePath) {
 }
 
 function write_new_user_data($filePath) {
+    $_SESSION['userData'] = [$_SESSION['username'], $GLOBALS['startingBalance']];
+    write_zero($_SESSION['count']);
+
     $file = fopen($filePath, "a");
-    fwrite($file, $_SESSION['username'] . "," . $GLOBALS['startingBalance'] .
-             "," . write_zero($_SESSION['count']) . "\r\n");
+    fwrite($file, implode(',', $_SESSION['userData']) . "\r\n");
 
     $_SESSION['balance'] = $GLOBALS['startingBalance'];
     fclose($file);
 }
 
 function write_zero($count) {
-    $zero = "";
     for($i = 0; $i < $count; $i++) {
-        $zero .= "0,";
+        array_push($_SESSION['userData'], 0);
     }
-    return substr($zero, 0, -1);
 }
 
 function update_user_data($filePath, $userData) {
@@ -60,7 +57,7 @@ function update_user_data($filePath, $userData) {
     while(!feof($file)) {
         $line = fgets($file);
         if($line == "") {
-            break;
+            continue;
         }
 
         $arrUser = explode(',', $line);
@@ -69,11 +66,43 @@ function update_user_data($filePath, $userData) {
             $line = implode(',', $userData);
         }
 
-        $content .= $line . "\r\n";
+        $content .= $line;
     }
     fclose($file);
 
     $file = fopen($filePath, "w");
-    fwrite($file, $content);
+    fwrite($file, $content . "\r\n");
+    fclose($file);
+}
+
+function write_new_misc_data($filePath) {
+    $file = fopen($filePath, "a");
+    fwrite($file, implode(',', $_SESSION['miscData']) . "\r\n");
+    fclose($file);
+}
+
+function check_misc_user_data($filePath) {
+    if(!isset($_SESSION['username'])) {
+        echo "<script>username not set</script>";
+        exit();
+    }
+
+    $file = fopen($filePath, "r");
+    $username = $_SESSION['username'];
+    $isFound = false;
+
+    while(!feof($file)) {
+        $line = fgets($file);
+        if($line == "") {
+            continue;
+        }
+        $arrUser = explode(',', $line);
+
+        if($arrUser[0] == $username) {
+            $_SESSION['miscData'] = $arrUser;
+            $_SESSION['hasCard'] = true;
+            break;
+        }
+    }
     fclose($file);
 }

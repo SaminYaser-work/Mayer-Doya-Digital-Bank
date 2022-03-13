@@ -49,10 +49,70 @@ echo "<h2>Your balance is: ".$_SESSION['balance']."</h2>";
         <?php
             }
             ?>
-
-
     </table>
 </div>
+
+<fieldset>
+    <legend>News</legend>
+    <?php
+    require_once('../controllers/fetch-news.php');
+
+    $data = getNews("../models/news-api.txt");
+
+    ?>
+    <div class="news-flex-container">
+        <?php
+    $limit = 0;
+foreach($data->articles as $article) {
+    ?>
+        <div class="card-wrapper">
+            <div class="card">
+                <div class="image-wrapper">
+                    <a class="image-link" href="<?=$article->url?>">
+                        <img class="news-img" src='<?=$article->urlToImage?>' alt='news image'>
+                        <a />
+                </div>
+                <div class="text-box-wrapper">
+                    <div class="text-box">
+                        <h2 class="heading">
+                            <?=$article->title?>
+                        </h2>
+                        <div class="heading-line">
+
+                        </div>
+
+                        <p class="text">
+                            <?=$article->description?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="button-wrapper">
+                    <a class="button" target="_blank" href="<?=$article->url?>">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        </div>
+        <?php
+    $limit++;
+    if($limit >= 3) {
+        $limit = 0;
+        break;
+    }
+}
+?>
+    </div>
+    <br>
+    <style>
+    .more-news {
+        width: 100%;
+        text-align: center;
+    }
+    </style>
+    <div class="more-news"><a href="news.php" class="button-main">More News</a></div>
+    <br>
+</fieldset>
 
 <?php
 require_once('dash-2.html');
