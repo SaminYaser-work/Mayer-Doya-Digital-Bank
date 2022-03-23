@@ -1,4 +1,23 @@
 <?php
+$msg = "";
+
+if(isset($_GET['msg'])) {
+    switch($_GET['msg']) {
+        case "regFailed":
+            $msg = "<b style='color: red;'>Unable to insert into DB.</b>";
+            break;
+        case "regSuccess":
+            $msg = "<b style='color: green;'>Registration successful!</b>
+            <br>  <a href='../views/login.php'>Log in to Your New Account.</a>";
+            break;
+        case "duplicate":
+            $msg = "<b style='color: red;'>Username or Email already exists. Please use a different one.</b>";
+            break;
+        default:
+            $msg = "";
+            break;
+    }
+}
 
 ?>
 
@@ -31,7 +50,8 @@
         <input type="submit" name="submit" value="Submit">
 
     </form>
-
+    <br>
+    <div><?= $msg ?></div>
     <p>Already have an account? <a href="login.php">Log In</a></p>
 </body>
 

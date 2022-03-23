@@ -1,6 +1,5 @@
 <?php
 
-
 if(isset($_REQUEST['submit'])) {
 
     $firstname = $_POST['firstname'];
@@ -11,15 +10,24 @@ if(isset($_REQUEST['submit'])) {
     $repass = $_POST['repass'];
 
     if($pass == $repass) {
-        $file = fopen('../models/users.txt', 'a');
-        $write = $username . ',' . $pass . ',' . $firstname . ',' . $lastname . ',' . $email . "\r\n";
-        fwrite($file, $write);
-        fclose($file);
-        echo "<script>alert('Registration successful');</script>";
-        echo "<a href='../views/login.php'>Log in to Your New Account.</a>";
+        require_once("../models/users-model.php");
+
+        if(isUnique($username, $email)) {
+            if(reg($firstname, $lastname, $username, $email, $pass)) {
+                header("Location: ../views/registration.php?msg=regSuccess");
+            } else {
+                header("Location: ../views/registration.php?msg=regFailed");
+            }
+        } 
+        else {
+            header("Location: ../views/registration.php?msg=duplicate");
+        }
+
+        // echo "<script>alert('Registration successful');</script>";
+        // echo "<a href='../views/login.php'>Log in to Your New Account.</a>";
         // header('Location: login.php');
     } else {
-        echo "<script>alert('Passwords do not match');</script>";
+        echo "<script>alert('Passwords do not match!');</script>";
     }
 
 }
