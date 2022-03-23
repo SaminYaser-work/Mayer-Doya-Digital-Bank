@@ -24,6 +24,8 @@ if(isset($_GET['msg'])) {
 
 <body>
 
+    <img class="logo" src="../assets/logo.png" alt="logo">
+
     <div class="container">
         <div class="box">
             <form action="../controllers/loginCheck.php" method="post">
