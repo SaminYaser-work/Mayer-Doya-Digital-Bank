@@ -3,6 +3,7 @@
 session_start();
 $_SESSION['username'] = "";
 $_SESSION['userInfo'] = array();
+$_SESSION['userData'] = array();
 
 if(isset($_REQUEST['submitLogin'])) {
 

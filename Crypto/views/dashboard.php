@@ -1,13 +1,14 @@
 <?php
 require_once('../../General/views/header.php');
 require_once('dash-1.html');
+require_once('../models/user-crypto-model.php');
 
 ?>
 
 <h1>Home</h1>
 <?php
 echo "<h2>Welcome, ".$_SESSION['username']."</h2>";
-echo "<h2>Your balance is: ".$_SESSION['balance']."</h2>";
+echo "<h2>Your balance is: ". getBalance() ."</h2>";
 
 ?>
 

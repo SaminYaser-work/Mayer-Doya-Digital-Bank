@@ -3,50 +3,35 @@ require_once('../../General/views/header.php');
 
 require_once('dash-1.html');
 
-$minimumBalance = 50000;
+$minimumBalance = 5000;
 
-function checkFile() {
-    echo '<script>alert("' . $_FILES['nid']['size'] . '")</script>';
-    $size = (int)$_FILES['nid']['size'];
-    if($size <= 10485760) {
-        $ext = pathinfo($_FILES['nid']['name'], PATHINFO_EXTENSION);
-        echo '<script>alert("' . $ext . '")</script>';
-        if($ext == "jpg") {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-    else return -2;
-}
+$msg = "";
 
-if(isset($_POST['submit'])) {
-    $result = checkFile();
-    echo '<script>alert("' . $result . '")</script>';
-
-    if ($result == -2) {
-        echo "<script>alert('File is too large!')</script>";
-    }
-    else if ($result == -1) {
-        echo "<script>alert('File must be a jpg!')</script>";
-    }
-    else {
-
-        $src = $_FILES['nid']['tmp_name'];
-        $des = 'uploads/' . $_SESSION['username'] . '_NID.jpg';
-
-        if(move_uploaded_file($src, $des)) {
-            $_SESSION['miscData'] = [$_SESSION['username'], $_REQUEST['houseno'], $_REQUEST['street'], $_REQUEST['city']];
-            $_SESSION['hasCard'] = true;
-            require_once('../controllers/get-user-data.php');
-            write_new_misc_data('../models/misc-data.txt');
-            echo "<script>alert('Successfully uploaded!')</script>";
-        }
-        else {
-            echo "<script>alert('Failed to upload!')</script>";
-        }
+if(isset($_GET['msg'])) {
+    switch($_GET['msg']) {
+        case 'success':
+            echo "<script>alert('Successfully updated your data.')</script>";
+            break;
+        case 'fileUploadError':
+            echo "<script>alert('Error uploading file.')</script>";
+            break;
+        case 'fileTypeError':
+            echo "<script>alert('File type not supported.')</script>";
+            break;
+        case 'fileSizeError':
+            echo "<script>alert('File size too large.')</script>";
+            break;
+        case 'dbUpdateError':
+            echo "<script>alert('Error updating database.')</script>";
+            break;
+        case 'duplicate':
+            echo "<script>alert('You already have a card!')</script>";
+            break;
+        default:
+            break;
     }
 }
+
 
 ?>
 
@@ -68,11 +53,14 @@ if(isset($_POST['submit'])) {
 <?php
 
 if(isset($_POST['checkEl'])) {
-    if($_SESSION['hasCard'] == true) {
-        echo "<script>alert('You already have a card!')</script>";
-    }
+    require_once('../models/user-crypto-model.php');
+    require_once('../models/misc-data-model.php');
 
-    else if($_SESSION['balance'] >= $minimumBalance) {
+    if(hasCard()) {
+        $msg = "duplicate";
+        header("Location: debit.php?msg={$msg}");
+    }
+    else if(getBalance() >= $minimumBalance) {
 ?>
 <p class="text-debit">
     <span class="text-debit-em">Congratulations!</span> You are eligible for the Crypto Debit Card. Provide
@@ -80,7 +68,7 @@ if(isset($_POST['checkEl'])) {
 
 <fieldset align="middle">
     <legend>Information for Crypto Debit Card</legend>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="../controllers/debit-form.php" method="post" enctype="multipart/form-data">
         <table style="margin: 0 auto;">
             <style>
             th {
@@ -93,13 +81,13 @@ if(isset($_POST['checkEl'])) {
                     First Name
                 </th>
                 <td>
-                    <input type="text" name="firstname" value="<?=$_SESSION['userInfo'][2]?>" disabled>
+                    <input type="text" name="firstname" value="<?=$_SESSION['userData']['FIRSTNAME']?>" disabled>
                 </td>
                 <th>
                     Last Name
                 </th>
                 <td>
-                    <input type="text" name="lastname" value="<?=$_SESSION['userInfo'][3]?>" disabled>
+                    <input type="text" name="lastname" value="<?=$_SESSION['userData']['LASTNAME']?>" disabled>
                 </td>
             </tr>
 
@@ -108,13 +96,13 @@ if(isset($_POST['checkEl'])) {
                     User Name
                 </th>
                 <td>
-                    <input type="text" name="username" value="<?=$_SESSION['userInfo'][0]?>" disabled>
+                    <input type="text" name="username" value="<?=$_SESSION['userData']['USERNAME']?>" disabled>
                 </td>
                 <th>
                     Email
                 </th>
                 <td>
-                    <input type="text" name="email" value="<?=$_SESSION['userInfo'][4]?>" disabled>
+                    <input type="text" name="email" value="<?=$_SESSION['userData']['EMAIL']?>" disabled>
                 </td>
             </tr>
 
@@ -156,7 +144,7 @@ if(isset($_POST['checkEl'])) {
 
             <tr>
                 <td colspan="3">
-                    <sub>(JPG Files only. Not more than 100KB.)</sub>
+                    <sub>(JPG Files only. Not more than 500KB.)</sub>
                 </td>
             </tr>
         </table>

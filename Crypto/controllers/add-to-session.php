@@ -11,7 +11,6 @@ $_SESSION['rBuy'] = 0.01;
 $_SESSION['rSell'] = 0.05;
 $_SESSION['rSend'] = 0.02;
 $_SESSION['total'] = 0;
-$_SESSION['userData'] = array();
 $_SESSION['miscData'] = array();
 $_SESSION['sym'] = "";
 $_SESSION['amount'] = 0;

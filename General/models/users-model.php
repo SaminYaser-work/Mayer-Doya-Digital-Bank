@@ -12,6 +12,7 @@ function login($username, $password) {
 
     if ($row) {
         $_SESSION['username'] = $username;
+        $_SESSION['userData'] = $row;
         foreach($row as $key => $value) {
             array_push($_SESSION['userInfo'], $value);
         }
@@ -34,4 +35,11 @@ function isUnique ($username, $email) {
     $sql = "SELECT * FROM general WHERE username = '$username' OR email = '$email'";
     $result = mysqli_query(getCon(), $sql);
     return mysqli_num_rows($result) ? false : true;
+}
+
+function getUserData() {
+    $sql = "SELECT * FROM general WHERE username = '{$_SESSION['username']}'";
+    $result = mysqli_query(getCon(), $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
 }

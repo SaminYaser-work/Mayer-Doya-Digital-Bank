@@ -1,11 +1,11 @@
 <?php
 
-function show_alert($message, $redirect) {
+function showAlert1($message, $redirect) {
     echo "<script>alert('$message');
     window.location.href = '$redirect';
     </script>";
 }
 
-function show_alert($message) {
+function showAlert2($message) {
     echo "<script>alert('$message')</script>";
 }

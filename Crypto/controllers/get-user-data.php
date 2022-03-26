@@ -2,35 +2,8 @@
 
 $startingBalance = 50000;
 
-function check_user_data($filePath) {
-    if(!isset($_SESSION['username'])) {
-        echo "<script>username not set</script>";
-        exit();
-    }
-
-    $file = fopen($filePath, "r");
-    $username = $_SESSION['username'];
-    $isFound = false;
-
-    while(!feof($file)) {
-        $line = fgets($file);
-        if($line == "") {
-            continue;
-        }
-        $arrUser = explode(',', $line);
-
-        if($arrUser[0] == $username) {
-            $_SESSION['balance'] = $arrUser[1];
-            $_SESSION['userData'] = $arrUser;
-            $isFound = true;
-            break;
-        }
-    }
-    fclose($file);
-
-    if(!$isFound) {
-        write_new_user_data($filePath);
-    }
+function check_user_data() {
+    if(isNewUser()) insertNewUserData();
 }
 
 function write_new_user_data($filePath) {

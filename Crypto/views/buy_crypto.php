@@ -1,8 +1,20 @@
 <?php
 require_once('../../General/views/header.php');
 require_once('dash-1.html');
+require_once('../models/user-crypto-model.php');
+require_once('../controllers/show_alert.php');
 
-$coins = ["BTC","ETH","XRP","LTC","BCH","DOGE","XMR","ADA","DOT","USDT"];
+$msg = "";
+
+if(isset($_GET['msg'])) {
+    switch($msg) {
+        case 'amountLarger':
+            showAlert2("Amount must be larger than 0.");
+            break;
+    }
+}
+
+$coins = getCoinNames();
 
 $sym = "";
 if(isset($_POST['buy'])) {
@@ -14,11 +26,11 @@ $sResult = "";
 $price = 0;
 $fee = 0;
 
-
 if(isset($_POST['bcalc'])) {
     $sym = $_REQUEST['coins'];
     $amount = $_REQUEST['amount'];
     $_SESSION['amount'] = $amount;
+
 
     require_once('../controllers/fetch-price.php');
     $data = getPrice("../models/price-api.txt");
@@ -56,21 +68,17 @@ if(isset($_POST['bcalc'])) {
 }
 
 if(isset($_POST['bconfirm'])) {
-    if($_SESSION['balance'] >= $_SESSION['total']){
-        $_SESSION['balance'] -= $_SESSION['total'];
+    if(getBalance() >= $_SESSION['total']){
+        // $_SESSION['balance'] -= $_SESSION['total'];
+        updateBalance(getBalance() - $_SESSION['total']);
 
         $_SESSION['userData'][1] = $_SESSION['balance'];
     
-        for ($i=0; $i < $_SESSION['count']; $i++) { 
-            if($coins[$i] == $_SESSION['sym']) {
-                $_SESSION['userData'][$i + 2] = $_SESSION['userData'][$i + 2] + $_SESSION['amount'];
-            }
-        }
+
+        updateCrypto($_SESSION['sym'], $_SESSION['amount'], true);
 
         reset_data();
 
-        require_once('../controllers/get-user-data.php');
-        update_user_data("../models/user-crypto.txt", $_SESSION['userData']);
     }
     else {
         echo "<script>alert('Insufficient Balance')</script>";
@@ -93,15 +101,10 @@ if(isset($_POST['bsell'])) {
     $amount = $_REQUEST['amount'];
     $_SESSION['amount'] = $amount;
 
-    for ($i=0; $i < $_SESSION['count']; $i++) { 
-        if($coins[$i] == $sym) {
-            if($amount > $_SESSION['userData'][$i + 2]) {
-                echo "<script>alert('Amount is larger than your inventory.')</script>";
-                reset_data();
-                sleep(1);
-                header('location: ' . $_SERVER['PHP_SELF']);
-            }
-        }
+    if(getCrypto($sym) < $amount) {
+        $a = getCrypto($sym);
+        reset_data();
+        showAlert1("Amount is larger than what you own! {$a}, {$sym}, {$amount}.", $_SERVER['PHP_SELF']);
     }
 
     require_once('../controllers/fetch-price.php');
@@ -143,20 +146,22 @@ if(isset($_POST['sconfirm'])) {
     $_SESSION['balance'] += $_SESSION['total'];
     $_SESSION['userData'][1] = $_SESSION['balance'];
 
-    for ($i=0; $i < $_SESSION['count']; $i++) { 
-        if($coins[$i] == $_SESSION['sym']) {
-            $_SESSION['userData'][$i + 2] = $_SESSION['userData'][$i + 2] - $_SESSION['amount'];
-        }
-    }
+    updateBalance(getBalance() + $_SESSION['total']);
+
+
+    updateCrypto($_SESSION['sym'], $_SESSION['amount'], false);
+
     reset_data();
-    require_once('../controllers/get-user-data.php');
-    update_user_data("../models/user-crypto.txt", $_SESSION['userData']);
 }
 
 ?>
 
 <h1>Buy & Sell</h1>
+<?php
+echo "<h2>Your balance is: ". getBalance() ."</h2>";
+?>
 
+<!-- Wallet -->
 <Fieldset>
     <legend>Your Wallet</legend>
 
@@ -166,12 +171,14 @@ if(isset($_POST['sconfirm'])) {
             <th width="320px">Amount</th>
         </tr>
         <?php
-    for ($i=0; $i < $_SESSION['count']; $i++) { 
-    ?>
+        $userData = getUserData();
+        $coinName = getCoinNames();
+        foreach($coinName as $coin) {
+        ?>
 
         <tr>
-            <td align="middle" style="font-weight: bold;"><?=$coins[$i]?></td>
-            <td align="middle"><?=$_SESSION['userData'][$i + 2]?></td>
+            <td align="middle" style="font-weight: bold;"><?=$coin?></td>
+            <td align="middle"><?=$userData[$coin]?></td>
         </tr>
 
         <?php
@@ -180,6 +187,7 @@ if(isset($_POST['sconfirm'])) {
     </table>
 </Fieldset>
 
+<!-- Buy -->
 <fieldset>
     <legend>Buy</legend>
     <form action="" method="post">
@@ -216,12 +224,12 @@ if(isset($_POST['sconfirm'])) {
                 </td>
             </tr>
         </table>
-        <!-- <br> -->
-        <!-- <br> -->
     </form>
     <?php echo $bResult; ?>
 </fieldset>
 
+
+<!-- Sell -->
 <fieldset>
     <legend>Sell</legend>
     <form action="" method="post">
@@ -234,10 +242,10 @@ if(isset($_POST['sconfirm'])) {
                     <select name="coins" id="" required>
                         <option disabld selected hidden value="">--- Select a Currency ---</option>
                         <?php
-                        for ($i=0; $i < $_SESSION['count']; $i++) { 
-                            if($_SESSION['userData'][$i + 2] > 0) {
+                        foreach($coinName as $coin) {
+                            if($userData[$coin] > 0) {
                         ?>
-                        <option value="<?=$coins[$i]?>"><?=$coins[$i]?></option>
+                        <option value="<?=$coin?>"><?=$coin?></option>
                         <?php  
                            }
                         }
@@ -264,8 +272,6 @@ if(isset($_POST['sconfirm'])) {
     </form>
     <?php echo $sResult; ?>
 </fieldset>
-
-
 
 <?php
 require_once('dash-2.html');

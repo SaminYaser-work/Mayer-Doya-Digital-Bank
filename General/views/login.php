@@ -24,7 +24,7 @@ if(isset($_GET['msg'])) {
 
 <body>
 
-    <img class="logo" src="../assets/logo.png" alt="logo">
+    <img class="logo" src="../assets/logo2.png" alt="logo" width="500px">
 
     <div class="container">
         <div class="box">
