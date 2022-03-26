@@ -28,31 +28,56 @@ if(isset($_GET['msg'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
     <title>Registration</title>
 </head>
 
 <body>
-    <form method="post" action="../controllers/regCheck.php">
 
-        <label> Firstname </label>
-        <input type="text" name="firstname" required> <br>
-        <label> Lastname: </label>
-        <input type="text" name="lastname" requried> <br>
-        <label> Username: </label>
-        <input type="text" name="username" requried> <br>
-        Email:
-        <input type="email" name="email" requried> <br>
-        Password:
-        <input type="password" name="pass" required> <br>
-        Re-type password:
-        <input type="password" name="repass" required> <br> <br>
+    <img class="logo" src="../assets/logo2.png" alt="logo" width="500px">
 
-        <input type="submit" name="submit" value="Submit">
+    <div class="container">
+        <div class="box">
+            <form method="post" action="../controllers/regCheck.php">
+                <div class="label"> Firstname </div>
+                <div class="input-container">
+                    <input class="input-field" type="text" name="firstname" required>
+                </div>
 
-    </form>
-    <br>
-    <div><?= $msg ?></div>
-    <p>Already have an account? <a href="login.php">Log In</a></p>
+                <div class="label"> Lastname </div>
+                <div class="input-container">
+                    <input class="input-field" type="text" name="lastname" requried>
+                </div>
+
+                <div class="label"> Username </div>
+                <div class="input-container">
+                    <input class="input-field" type="text" name="username" requried>
+                </div>
+
+                <div class="label"> Email </div>
+                <div class="input-container">
+                    <input class="input-field" type="email" name="email" requried>
+                </div>
+
+                <div class="label"> Password </div>
+                <div class="input-container">
+                    <input class="input-field" type="password" name="pass" required>
+                </div>
+
+                <div class="label"> Retype Password </div>
+                <div class="input-container">
+                    <input class="input-field" type="password" name="repass" required>
+                </div>
+
+                <input class="button" type="submit" name="submit" value="Register">
+            </form>
+            <br>
+            <div><?= $msg ?></div>
+            <div class="text-center">
+                <p class="label label-sub">Already have an account? <a href="login.php">Log In</a></p>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
