@@ -4,14 +4,16 @@ $msg = "";
 if(isset($_GET['msg'])) {
     switch($_GET['msg']) {
         case "regFailed":
-            $msg = "<b style='color: red;'>Unable to insert into DB.</b>";
+            // $msg = "<b style='color: red;'>Unable to insert into DB.</b>";
+            echo "<script>alert('Unable to insert into DB.');</script>";
             break;
         case "regSuccess":
             $msg = "<b style='color: green;'>Registration successful!</b>
             <br>  <a href='../views/login.php'>Log in to Your New Account.</a>";
             break;
         case "duplicate":
-            $msg = "<b style='color: red;'>Username or Email already exists. Please use a different one.</b>";
+            // $msg = "<b style='color: red;'>Username or Email already exists. Please use a different one.</b>";
+            echo "<script>alert('Username or Email already exists. Please use a different one.');</script>";
             break;
         default:
             $msg = "";
@@ -29,6 +31,7 @@ if(isset($_GET['msg'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
+    <script src="reg.js" defer></script>
     <title>Registration</title>
 </head>
 
@@ -39,34 +42,34 @@ if(isset($_GET['msg'])) {
     <div class="container">
         <div class="box">
             <form method="post" action="../controllers/regCheck.php">
-                <div class="label"> Firstname </div>
+                <div class="label"> First Name </div>
                 <div class="input-container">
-                    <input class="input-field" type="text" name="firstname" required>
+                    <input class="input-field" type="text" name="firstname">
                 </div>
 
-                <div class="label"> Lastname </div>
+                <div class="label"> Last Name </div>
                 <div class="input-container">
-                    <input class="input-field" type="text" name="lastname" requried>
+                    <input class="input-field" type="text" name="lastname">
                 </div>
 
                 <div class="label"> Username </div>
                 <div class="input-container">
-                    <input class="input-field" type="text" name="username" requried>
+                    <input class="input-field" type="text" name="username">
                 </div>
 
                 <div class="label"> Email </div>
                 <div class="input-container">
-                    <input class="input-field" type="email" name="email" requried>
+                    <input class="input-field" type="email" name="email">
                 </div>
 
                 <div class="label"> Password </div>
                 <div class="input-container">
-                    <input class="input-field" type="password" name="pass" required>
+                    <input class="input-field" type="password" name="pass">
                 </div>
 
                 <div class="label"> Retype Password </div>
                 <div class="input-container">
-                    <input class="input-field" type="password" name="repass" required>
+                    <input class="input-field" type="password" name="repass">
                 </div>
 
                 <input class="button" type="submit" name="submit" value="Register">
