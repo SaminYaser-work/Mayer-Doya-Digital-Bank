@@ -62,7 +62,7 @@ function isNewUser() {
 function insertNewUserData() {
     $sql = "INSERT INTO" . getTable() . "VALUES (DEFAULT, '" . $_SESSION['username'] .
             "', " . $GLOBALS['startingBalance'] . "
-            ,0,0,0,0,0,0,0,0,0)";
+            ,0,0,0,0,0,0,0,0,0,0)";
 
     mysqli_query(getCon(), $sql);
 }
