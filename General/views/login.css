@@ -60,6 +60,11 @@ body {
   color: var(--text-gray);
 }
 
+.span-small {
+  font-size: small;
+  color: var(--highlight-error);
+}
+
 .input-container {
   background-color: var(--bg-dark);
   border-radius: 0.25rem;

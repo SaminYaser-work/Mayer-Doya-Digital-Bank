@@ -1,6 +1,6 @@
 const form = document.querySelector("form");
 
-const checkInput = (input) => input.trim().length > 0;
+const checkEmpty = (input) => input.trim().length > 0;
 
 const showError = (index) => {
   document
@@ -10,7 +10,7 @@ const showError = (index) => {
   let message = index == 0 ? "Username" : "Password";
 
   document.getElementsByClassName("label")[index].innerHTML =
-    message + " - Please fill out this field";
+    message + ' - <span class="span-small">Please fill out this field</span>';
 };
 
 form.onsubmit = () => {
@@ -19,7 +19,7 @@ form.onsubmit = () => {
   let isValid = true;
 
   for (let i = 0; i < data.length; i++) {
-    if (!checkInput(data[i].value)) {
+    if (!checkEmpty(data[i].value)) {
       showError(i);
       isValid = false;
     }
