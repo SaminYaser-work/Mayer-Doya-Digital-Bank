@@ -34,6 +34,7 @@ if(isset($_GET['msg'])) {
 
 
 ?>
+<script src="debit.js" defer></script>
 
 <h1>Debit Card</h1>
 <img src="../assets/debit.png" alt="" class="img-debit" width="100px">
@@ -109,13 +110,13 @@ if(isset($_POST['checkEl'])) {
             <tr>
                 <th>House Number</th>
                 <td>
-                    <input type="number" name="houseno" min="0" required>
+                    <input id="houseno" type="number" name="houseno" min="0">
                 </td>
                 <th>
                     Street Name
                 </th>
                 <td>
-                    <input type="text" name="street" id="" required>
+                    <input type="text" name="street" id="street">
                 </td>
             </tr>
 
@@ -124,7 +125,7 @@ if(isset($_POST['checkEl'])) {
                     City
                 </th>
                 <td>
-                    <select name="city" id="" required>
+                    <select name="city" id="city">
                         <option disabled selected>--- Select City ---</option>
                         <option value="Dhaka">Dhaka</option>
                         <option value="Chittagong">Chittagong</option>
