@@ -26,11 +26,7 @@ require_once('../models/user-crypto-model.php');
         style="width: 300px; height: 300px;" loop autoplay></lottie-player>
 </div>
 
-<div id="content">
-
-</div>
-
-
+<div id="content"></div>
 
 <?php
 require_once('dash-2.html');
@@ -50,7 +46,6 @@ http.onreadystatechange = function() {
         content.innerHTML = this.responseText;
         loading.style.display = 'none';
         content.style.display = 'block';
-        console.log('ok');
     } else {
         console.log('not ok');
     }
