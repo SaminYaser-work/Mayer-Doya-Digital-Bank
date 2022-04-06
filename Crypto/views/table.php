@@ -1,5 +1,7 @@
 <?php
 echo '
+<fieldset>
+<legend>Chart</legend>
 <div class="trend">
     <table>
         <tr>
@@ -44,6 +46,7 @@ END;
 echo '
 </table>
 </div>
+</fieldset>
 ';
 
 

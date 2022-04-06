@@ -8,7 +8,7 @@ require_once('../models/user-crypto-model.php');
 <h1>Home</h1>
 <?php
     echo "<h2>Welcome, ".$_SESSION['username']."</h2>";
-    echo "<h2>Your balance is: ". getBalance() ."</h2>";
+    echo "<h2>Your balance is: $". getBalance() . "</h2>";
 ?>
 
 <style>
@@ -34,7 +34,6 @@ require_once('dash-2.html');
 
 <script type="text/javascript">
 const content = document.getElementById('content');
-content.style.display = 'none';
 const loading = document.getElementById('loading');
 
 
@@ -45,7 +44,6 @@ http.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         content.innerHTML = this.responseText;
         loading.style.display = 'none';
-        content.style.display = 'block';
     } else {
         console.log('not ok');
     }
