@@ -33,14 +33,18 @@ echo '
                 <img src="${logo}" alt="logo" width="20px" style="vertical-align: baseline;">
                 {$name}
                 <span class="symbol">${symbol}</span>
-        </td>
+            </td>
 
-<td>${price}</td>
-<td class="${class}">${change}</td>
-<form action="buy_crypto.php?sym=${symbol}" method="post">
-    <td class="trend-buy"><input type="submit" name="buy" value="Buy" class="button-buy"></td>
-</form>
-</tr>
+            <td>${price}</td>
+
+            <td class="${class}">${change}</td>
+
+            <td class="trend-buy">
+                <form action="buy_crypto.php?sym=${symbol}" method="post">
+                    <input type="submit" name="buy" value="Buy" class="button-buy">
+                </form>
+            </td>
+        </tr>
 END;
 }
 echo '
