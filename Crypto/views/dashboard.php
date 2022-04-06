@@ -7,113 +7,52 @@ require_once('../models/user-crypto-model.php');
 
 <h1>Home</h1>
 <?php
-echo "<h2>Welcome, ".$_SESSION['username']."</h2>";
-echo "<h2>Your balance is: ". getBalance() ."</h2>";
-
+    echo "<h2>Welcome, ".$_SESSION['username']."</h2>";
+    echo "<h2>Your balance is: ". getBalance() ."</h2>";
 ?>
 
+<style>
+#loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+</style>
 
-<div class="trend">
-    <table>
-        <tr>
-            <th class="trend-header trend-name">Name</th>
-            <th class="trend-header trend-price">Last Price</th>
-            <th class="trend-header trend-change">Change [1h]</th>
-            <th></th>
-        </tr>
-
-        <?php
-
-            require_once('../controllers/fetch-price.php');
-            $data = getPrice('../models/price-api.txt');
-
-            foreach($data as $coin) {
-              $class = "";
-              if($coin->{'1h'}->price_change_pct >= 0) {
-                $class = "change-up";
-              } else {
-                $class = "change-down";
-              }
-                  ?>
-        <tr>
-            <td class="trend-name" style="height: 40px;">
-                <img src="<?=$coin->logo_url?>" alt="logo" width="20px" style="vertical-align: baseline;">
-                <?=$coin->name . " "?>
-                <span class="symbol"><?=$coin->symbol?></span>
-            </td>
-            <td><?="৳" . number_format($coin->price, 2, '.', ',')?></td>
-            <td class="<?=$class?>"><?=number_format($coin->{'1h'}->price_change_pct, 4, '.', ',') . "%"?></td>
-            <form action="buy_crypto.php?sym=<?=$coin->symbol?>" method="post">
-                <td class="trend-buy"><input type="submit" name="buy" value="Buy" class="button-buy"></td>
-            </form>
-        </tr>
-        <?php
-            }
-            ?>
-    </table>
+<div id="loading">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_sryowwkv.json" background="transparent" speed="1"
+        style="width: 300px; height: 300px;" loop autoplay></lottie-player>
 </div>
 
-<fieldset>
-    <legend>News</legend>
-    <?php
-    require_once('../controllers/fetch-news.php');
+<div id="content">
 
-    $data = getNews("../models/news-api.txt");
+</div>
 
-    ?>
-    <div class="news-flex-container">
-        <?php
-    $limit = 0;
-foreach($data->articles as $article) {
-    ?>
-        <div class="card-wrapper">
-            <div class="card">
-                <div class="image-wrapper">
-                    <a class="image-link" href="<?=$article->url?>">
-                        <img class="news-img" src='<?=$article->urlToImage?>' alt='news image'>
-                        <a />
-                </div>
-                <div class="text-box-wrapper">
-                    <div class="text-box">
-                        <h2 class="heading">
-                            <?=$article->title?>
-                        </h2>
-                        <div class="heading-line">
 
-                        </div>
-
-                        <p class="text">
-                            <?=$article->description?>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="button-wrapper">
-                    <a class="button" target="_blank" href="<?=$article->url?>">
-                        Read More
-                    </a>
-                </div>
-            </div>
-        </div>
-        <?php
-    $limit++;
-    if($limit >= 3) {
-        $limit = 0;
-        break;
-    }
-}
-?>
-    </div>
-    <br>
-    <style>
-    .more-news {
-        width: 100%;
-        text-align: center;
-    }
-    </style>
-    <div class="more-news"><a href="news.php" class="button-main">More News</a></div>
-    <br>
-</fieldset>
 
 <?php
 require_once('dash-2.html');
+?>
+
+<script type="text/javascript">
+const content = document.getElementById('content');
+content.style.display = 'none';
+const loading = document.getElementById('loading');
+
+
+const http = new XMLHttpRequest();
+http.open('GET', 'table.php', true);
+http.send();
+http.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        content.innerHTML = this.responseText;
+        loading.style.display = 'none';
+        content.style.display = 'block';
+        console.log('ok');
+    } else {
+        console.log('not ok');
+    }
+}
+</script>
