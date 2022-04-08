@@ -17,7 +17,7 @@ if(isset($_POST["submit"])) {
           if($imageFileType == "jpg") {
             if (move_uploaded_file($_FILES["nid"]["tmp_name"], $target_file)) {
                 require_once('../models/misc-data-model.php');
-                updateMiscData(11, 'abc', 'Dhaka') ? $msg = "success" : $msg = "dbUpdateError";
+                updateMiscData($houseno, $street, $city) ? $msg = "success" : $msg = "dbUpdateError";
             } 
             else {
                 $msg = "fileUploadError";

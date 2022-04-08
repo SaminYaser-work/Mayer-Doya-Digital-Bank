@@ -24,9 +24,6 @@ if(isset($_GET['msg'])) {
         case 'dbUpdateError':
             echo "<script>alert('Error updating database.')</script>";
             break;
-        case 'duplicate':
-            echo "<script>alert('You already have a card!')</script>";
-            break;
         default:
             break;
     }
@@ -47,131 +44,12 @@ if(isset($_GET['msg'])) {
 </p>
 
 
-<form method="post" style="margin: 1rem auto; width: 10rem;">
-    <input type="submit" class="button-main" name="checkEl" value="Check for Eligibility">
-</form>
+<div style="margin: 1rem auto; width: 10rem;">
+    <input style="margin: 1rem auto; width: 10rem;" id="check-validity" type="submit" class="button-main" name="checkEl"
+        value="Check for Eligibility">
+</div>
 
-<?php
-
-if(isset($_POST['checkEl'])) {
-    require_once('../models/user-crypto-model.php');
-    require_once('../models/misc-data-model.php');
-
-    if(hasCard()) {
-        $msg = "duplicate";
-        header("Location: debit.php?msg={$msg}");
-    }
-    else if(getBalance() >= $minimumBalance) {
-?>
-<p class="text-debit">
-    <span class="text-debit-em">Congratulations!</span> You are eligible for the Crypto Debit Card. Provide
-    necessary infomation below to get your <span class="text-debit-em">Crypto Debit Card.</span>
-
-<fieldset align="middle">
-    <legend>Information for Crypto Debit Card</legend>
-    <form action="../controllers/debit-form.php" method="post" enctype="multipart/form-data">
-        <table style="margin: 0 auto;">
-            <style>
-            th {
-                text-align: left;
-            }
-            </style>
-
-            <tr>
-                <th>
-                    First Name
-                </th>
-                <td>
-                    <input type="text" name="firstname" value="<?=$_SESSION['userData']['FIRSTNAME']?>" disabled>
-                </td>
-                <th>
-                    Last Name
-                </th>
-                <td>
-                    <input type="text" name="lastname" value="<?=$_SESSION['userData']['LASTNAME']?>" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <th>
-                    User Name
-                </th>
-                <td>
-                    <input type="text" name="username" value="<?=$_SESSION['userData']['USERNAME']?>" disabled>
-                </td>
-                <th>
-                    Email
-                </th>
-                <td>
-                    <input type="text" name="email" value="<?=$_SESSION['userData']['EMAIL']?>" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <th>House Number</th>
-                <td>
-                    <input id="houseno" type="number" name="houseno" min="0">
-                </td>
-                <th>
-                    Street Name
-                </th>
-                <td>
-                    <input type="text" name="street" id="street">
-                </td>
-            </tr>
-
-            <tr>
-                <th>
-                    City
-                </th>
-                <td>
-                    <select name="city" id="city">
-                        <option disabled selected>--- Select City ---</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Chittagong">Chittagong</option>
-                        <option value="Khulna">Khulna</option>
-                        <option value="Rajshahi">Rajshahi</option>
-                        <option value="Sylhet">Sylhet</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <th>Scan of NID</th>
-                <td>
-                    <input type="file" name="nid" accept="image/jpeg" required>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="3">
-                    <sub>(JPG Files only. Not more than 500KB.)</sub>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <input class="button-submit" type="submit" name="submit" value="Submit">
-    </form>
-</fieldset>
-
-<?php
-    } else {
-
-?>
-
-<p class="text-debit">
-    <span class="text-debit-em">Sorry!</span> You are not eligible for the Crypto Debit Card.
-    <br>
-    <span class="text-debit-em">Minimum Balance Required: $<?=$minimumBalance?></span>
-</p>
-
-<?php
-    }
-}
-
-?>
-
+<div class="msg"></div>
 
 <?php
 require_once('dash-2.html');

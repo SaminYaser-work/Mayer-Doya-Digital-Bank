@@ -1,18 +1,14 @@
-const form = document.querySelector("form");
-const houseno = document.getElementById("houseno");
-const street = document.getElementById("street");
-const city = document.getElementById("city");
+const validity = document.getElementById("check-validity");
+const message = document.querySelector(".msg");
 
-form.onsubmit = () => {
-  if (houseno.value == "" || street.value == "" || city.value == "") {
-    alert("Please fill out all fields");
-    return false;
-  }
-
-  if (houseno.value == "0") {
-    alert("Please enter a valid house number");
-    return false;
-  }
-
-  return true;
+validity.onclick = () => {
+  let http = new XMLHttpRequest();
+  http.open("POST", "../controllers/check-debit-val.php", true);
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      message.innerHTML = this.responseText;
+    }
+  };
 };
