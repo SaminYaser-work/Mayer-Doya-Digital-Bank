@@ -44,9 +44,26 @@ if(isset($_GET['msg'])) {
 </p>
 
 
-<div style="margin: 1rem auto; width: 10rem;">
+<div id="check4val" style="margin: 1rem auto; width: 10rem;">
     <input style="margin: 1rem auto; width: 10rem;" id="check-validity" type="submit" class="button-main" name="checkEl"
         value="Check for Eligibility">
+</div>
+
+<style>
+#loading {
+    margin: 1rem auto;
+    width: fit-content;
+    display: none;
+}
+</style>
+
+<div id="loading">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_5KobUw.json" background="transparent" speed="1"
+        style="width: 300px; height: 300px;" loop autoplay>
+    </lottie-player>
+    <p>Querying the database... Please wait 😇</p>
+
 </div>
 
 <div class="msg"></div>

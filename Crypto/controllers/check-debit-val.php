@@ -3,6 +3,8 @@ session_start();
 require_once('../models/user-crypto-model.php');
 require_once('../models/misc-data-model.php');
 
+sleep(3);
+
 if(hasCard()) {
     echo <<<END
     <p class="text-debit">
