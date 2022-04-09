@@ -2,6 +2,8 @@
 
 require_once('../../General/views/header.php');
 
+sleep(3);
+
 $fee = 0.0000;
 $amount = 0.0000;
 

@@ -36,6 +36,15 @@ require_once('dash-1.html');
                 Fee ($) <br>
                 <input id="fee" type="text" size="20">
             </td>
+            <td id="loading">
+                <br>
+                <span>
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                    <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_Stt1R6.json"
+                        background="transparent" speed="1" style="width: 30px; height: 30px;" loop autoplay>
+                    </lottie-player>
+                </span>
+            </td>
         </tr>
 
         <tr>
