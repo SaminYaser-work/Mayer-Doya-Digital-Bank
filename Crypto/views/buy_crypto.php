@@ -170,22 +170,40 @@ echo "<h2>Your balance is: ". getBalance() ."</h2>";
             <th width="320px">Coin</th>
             <th width="320px">Amount</th>
         </tr>
-        <?php
-        $userData = getUserData();
-        $coinName = getCoinNames();
-        foreach($coinName as $coin) {
-        ?>
-
-        <tr>
-            <td align="middle" style="font-weight: bold;"><?=$coin?></td>
-            <td align="middle"><?=$userData[$coin]?></td>
-        </tr>
-
-        <?php
-    }
-    ?>
     </table>
 </Fieldset>
+<script>
+// JSON Implementation
+document.addEventListener("DOMContentLoaded", function(event) {
+    let http = new XMLHttpRequest();
+    http.open("POST", "../controllers/get-wallet.php", true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send();
+    http.onreadystatechange = function() {
+        if (http.readyState == 4 && http.status == 200) {
+            let data = JSON.parse(http.responseText);
+            showWallet(data);
+        }
+    }
+
+    const showWallet = (data) => {
+        let table = document.querySelector(".table-fee");
+        for (var x in data) {
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            td1.setAttribute("align", "middle");
+            td1.setAttribute("style", "font-weight: bold;");
+            td2.setAttribute("align", "middle");
+            td1.innerHTML = x;
+            td2.innerHTML = data[x];
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            table.appendChild(tr);
+        }
+    }
+});
+</script>
 
 <!-- Buy -->
 <fieldset>
