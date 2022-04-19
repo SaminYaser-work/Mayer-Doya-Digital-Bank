@@ -1,6 +1,6 @@
 <html>
 <head><title>Apply Debit Card</title>
-
+<link rel="stylesheet" type="text/css" href="css/debit_card_form.css">
 </head>
 <body>
     <?php include 'header.php' ?>
@@ -16,7 +16,7 @@
 <form>
 </div>
 </body>
-
+<?php include 'footer.php' ?>
 </html>
 
 <?php
@@ -73,7 +73,9 @@ if(isset($_POST['dbt_crd_submit'])){
      
 
         else{
-            
+            //-------------------------------------------------------------------'
+
+            //Code to Issue Debit Card since all the provided details are correct
             
             $mob_no = $row['Mobile_no'];
            if($row['Debit_Card_No'] === NULL){
@@ -84,12 +86,32 @@ if(isset($_POST['dbt_crd_submit'])){
             if($conn->query($sql) == TRUE ){
 
 
-                
+                //SMS Integration for Debit Card Details  -----------------------------------------------------
+						
+					// require('textlocal.class.php');
+					// $apikey = 'Mzie479SxfY-Z7slYf9AI3zVXCAu0G5skUBQVYOfRU';
+					// $textlocal = new Textlocal(false,false,$apikey);
+					// $numbers = array($mob_no);
+					// $sender = 'TXTLCL';
+					// $message = 'Hello '.$row['Username'].' Your Debit Card No is : '.$debit_card.' with the auto generated pin : '.$debit_card_pin.' Please change this pin as soon as possible';
+
+					
+					// 	try {
+					// 		$result = $textlocal->sendSms($numbers, $message, $sender);
+					// 		print_r($result);
+					// 	} catch (Exception $e) {
+					// 		die('Error: ' . $e->getMessage());
+					// 	}
+						
+		//--------------------------------------------------------------------------------------				
+		//--------------------------------------------------------------------------------------
+	
 
 
             echo '<script>alert("Debit Card issued successfully.\n\nIt will be delivered to your home address soon.\n\nYour Debit Card No is : '.$debit_card.' and Pin is : '.$debit_card_pin.'\n\n Please change this pin as soon as possible.")</script>';
                 
             }
+            //--------------------------------------------------------------------
         }
 
         else{

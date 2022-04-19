@@ -2,6 +2,7 @@
 <head>
     
     <title>Internet Banking Registration</title>
+    <link rel="stylesheet" type="text/css" href="css/ebanking_reg_form.css">
     </head>
     <body>
        <?php include'header.php';?>
@@ -134,14 +135,31 @@ if(isset($_POST['submit'])){
 
         else{
 
-            
+            //$conn->autocommit(FALSE);
+            //$password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
             $sql="UPDATE bank_customers SET  Password='$password' WHERE bank_customers.Customer_ID= '$custmr_id' ";
 		    $conn->query($sql);
 		    if($result=$conn->query($sql)== TRUE){
 
 
-                
+                // require_once('textlocal.class.php');
+				// $apikey = 'Mzie479SxfY-Z7slYf9AI3zVXCAu0G5skUBQVYOfRU';
+				// $textlocal = new Textlocal(false,false,$apikey);
+				// $numbers = array($mobileno);
+				// $sender = 'TXTLCL';
+				// $hidden_ac_no  = "XXXXXXXX".substr($receiver_ac_no, 8, 13);
+				// $message = 'Your customer ID for Internet Banking is '.$custmr_id.'' ;
+			
+				// try {
+				// 	$result = $textlocal->sendSms($numbers, $message, $sender);
+				// 	print_r($result);
+				// } catch (Exception $e) {
+				// 	die('Error: ' . $e->getMessage());
+				// }
+
+				//-------------------------------------------------------------------------------------------	
+			
 				
 			echo '<script>alert("Registration Successfull\n\nCustomer ID : '.$custmr_id.' \n\nPlease use this customer id to login")</script>';
 			
@@ -169,7 +187,8 @@ if(isset($_POST['submit'])){
 ?>
 
 	
-
+	
+<?php include'footer.php';?>
     
     </body>
 </html>

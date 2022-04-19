@@ -13,7 +13,7 @@ if(isset($_SESSION['customer_login'])){
 <head>
     <title>Login Page</title>
   
-
+    <link rel="stylesheet" type="text/css" href="css/customer_login.css" />
 
     </head>
     <body>
@@ -37,15 +37,15 @@ if(isset($_SESSION['customer_login'])){
         <label class="userdetail">Password</label><br>
         <input class="password" type="password" name="password" required/><br>
         <input class="login-btn" type="submit" name="login-btn" value="LOGIN"/><br>
-        
-            
+        <a href="cust_forgetpass.php" class="help"><label class="label_help" >FORGET PASSWORD ?</label></a>
+            <img class="userloginimg" src="img/home-logo-hi.png" height="90px" width="90px">
         </div>
                 </div>
 							</div>  </div>
             </form>
         <br>
         
-  
+        <?php include 'footer.php' ?>
     </body>
 </html> 
 

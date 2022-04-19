@@ -2,16 +2,18 @@
 
 <html>
 <head>
+	<meta charset="utf-8">
+	
     <title>Registration Form</title>
-    
+    <link rel="stylesheet" type="text/css" href="css/customer_reg_form.css"/>
     
 	<?php include'header.php';  ?>
     </head>
-    <body>
+    <body onload='document.emailform.email.focus()'>
     <div class="container_regfrm_container_parent">
 	<h3>Online Account Opening Form</h3>
 	<div class="container_regfrm_container_parent_child">
-		<form method="post">
+		<form name="emailform" action="#" method="post">
 				 <input type="text" name="name" placeholder="Name" required />
 				 <select name ="gender" required >
 					  <option class="default" value="" disabled selected>Gender</option>
@@ -31,28 +33,58 @@
 
 
 
-				 <select name ="District" required >
-					  <option class="default" value="" disabled selected>District</option>
+				 <select name ="state" required >
+					  <option class="default" value="" disabled selected>State</option>
 					  
-					  <option value="California">Dhaka</option>
-					  <option value="Texas">Chittagong</option>
-					  <option value="Florida">Dinajpur</option>
-					  <option value="Washington">Barisal</option>
-					  <option value="Hawaii">Sylhet</option>
-					  <option value="Alaska">Rangpur</option>
-					  <option value="Alaska">Rajshahi</option>
-					  <option value="Alaska">Mymensingh</option>
-					 
+					  <option value="Barishal">Barishal</option>
+					  <option value="Dhaka">Dhaka</option>
+					  <option value="Chattogram">Chattogram</option>
+					  <option value="Dhaka">Dhaka</option>
+					  <option value="Khulna">Khulna</option>
+					  <option value="Rajshahi">Rajshahi</option>
+					  <option value="Rangpur">Rangpur</option>
+					  <option value="Mymensing">Mymensing</option>
+					  <option value="Sylhet">Sylhet</option>
 				</select>
 
 
 
 				 <select name ="city" required >
 					  <option class="default" value="" disabled selected>City</option>
-					  <option value="Dhaak">Dhaka</option>
-					  <option value="Narayanganj">Narayanganj</option>
-
-					  
+					  <option value="Bhairab">Bhairab</option>
+					  <option value="Bogra">Bogra</option>
+					  <option value="Brahmanbaria">Brahmanbaria</option>
+					  <option value="Chandpur">Chandpur</option>
+					  <option value="Chowmuhani">Chowmuhani</option>
+					  <option value="Chuadanga">Chuadanga</option>
+					  <option value="Comilla Sadar">Comilla Sadar</option>
+					  <option value="Cox's Bazar">Cox's Bazar</option>
+					  <option value="Dinajpur">Dinajpur</option>
+					  <option value="Dhaka">Dhaka</option>
+					  <option value="Faridpur">Faridpur</option>
+					  <option value="Feni">Feni</option>
+					  <option value="Jamalpur">Jamalpur</option>
+					  <option value="Jessor">Jessor</option>
+					  <option value="Jhenaidah">Jhenaidah</option>
+					  <option value="Kadam Rasul (Bandar)">Kadam Rasul (Bandar)</option>
+					  <option value="Kaliakari">Kaliakari</option>
+					  <option value="Kishoreganj">Kishoreganj</option>
+					  <option value="Kushtia">Kushtia</option>
+					  <option value="Maijdee">Maijdee</option>
+					  <option value="Naogaon">Naogaon</option>
+					  <option value="Narayanganj">Naryanganj</option>
+					  <option value="Narshindi">Narshindi</option>
+					  <option value="Nawabganj">Nawabganj</option>
+					  <option value="Pabna">Pabna</option>
+					  <option value="Saidpur">Saidpur</option>
+					  <option value="Satkhira">Satkhira</option>
+					  <option value="Savar">Savar</option>
+					  <option value="Siddhirganj">Siddhirganj</option>
+					  <option value="Sirajganja">Sirajganja</option>
+					  <option value="Sreepur">Sreepur</option>
+					  <option value="Tangail">Tangail</option>
+					  <option value="Tarabo">Tarabo</option>
+					  <option value="Tongi">Tongi</option>
 					  
 				</select>
 
@@ -69,12 +101,14 @@
 					  <option value="Saving">Saving</option>
 					  <option value="Current">Current</option>
 				</select>
-				<input type="submit" name="submit" value="Submit">
+				<input type="submit" name="submit" value="Submit" onclick="ValidateEmail(document.emailform.email)">
 				</form>
+				<script src="email-validation.js"></script>
          </div>
 		 </div>
+		
 		 
-
+<?php include'footer.php';?>
     
 </body>
 </html>
