@@ -69,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $sql2 = "UPDATE `investment` SET WITHDRAW=WITHDRAW+'$amount' WHERE USERNAME = '{$_SESSION['username']}'";
     mysqli_query(getCon(), $sql2);
+
+    $sql3 = "INSERT INTO `investment_log`(`date`, `withdraw`) VALUES (now(),'{$amount}')";
+    mysqli_query(getCon(), $sql3);
+    header("location: withdraw.php");
 }
 ?>
 

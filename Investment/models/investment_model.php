@@ -15,6 +15,7 @@ function getTable()
 function getTable1()
 {
     return "`user-crypto`";
+   // return "`investment_log`";
 }
 
 
@@ -67,4 +68,12 @@ function insertNewUserData()
 
 
     mysqli_query(getCon(), $sql);
+}
+
+function getLog(){
+
+    $sql = "SELECT * FROM investment_log";
+    $result = mysqli_query(getCon(), $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
 }

@@ -66,7 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $sql2 = "UPDATE `investment` SET DEPOSIT=DEPOSIT+'$amount' WHERE USERNAME = '{$_SESSION['username']}'";
     mysqli_query(getCon(), $sql2);
 
-    // header("Location: deposit.php");
+    $sql3 = "INSERT INTO `investment_log`(`date`, `deposit`) VALUES (now(),'{$amount}')";
+    mysqli_query(getCon(), $sql3);
+
+    header("Location: deposit.php");
 }
 
 ?>
